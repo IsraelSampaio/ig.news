@@ -1,14 +1,18 @@
+import { GetStaticProps } from "next";
 import Head from "next/head";
 import Image from "next/image";
 
 import { SubscribeButton } from "../components/subscribeButton";
+import { HomeProps } from "../interfaces/Home.interface";
+import { formatterNumberToCurrency } from "../helpers/formatterNumberToCurrency.helper";
+import { stripe } from "../services/stripe.service";
 
 import classnames from "classnames/bind";
 import styles from "../styles/modules/home.module.scss";
 
 const cn = classnames.bind(styles);
 
-export default function Home() {
+export default function Home({ amount, productId }: HomeProps) {
   return (
     <>
       <Head>
@@ -25,10 +29,10 @@ export default function Home() {
 
           <p>
             Get acess to all the publications <br />{" "}
-            <span>for $9,90 month</span>
+            <span>for {amount} month</span>
           </p>
 
-          <SubscribeButton />
+          <SubscribeButton productId={productId} />
         </section>
 
         <Image
@@ -41,3 +45,15 @@ export default function Home() {
     </>
   );
 }
+
+export const getStaticProps: GetStaticProps = async () => {
+  const price = await stripe.prices.retrieve("price_1JZFeyBPPqlVRHU8V9u8T2kG");
+
+  return {
+    props: {
+      productId: price.product,
+      amount: formatterNumberToCurrency(price.unit_amount / 100),
+    },
+    revalidate: 60 * 60 * 24, // 24 hours
+  };
+};
