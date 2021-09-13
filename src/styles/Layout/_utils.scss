@@ -1,0 +1,14 @@
+%flex-center {
+    display: flex;
+    align-items: center;
+}
+
+%flex-center-between {
+    @extend %flex-center;
+    justify-content: space-between;
+}
+
+%flex-center-center {
+    @extend %flex-center;
+    justify-content: center;
+}
