@@ -3,7 +3,7 @@ import Head from "next/head";
 
 import { Header } from "../components/Header";
 
-import "../styles/global.scss";
+import "../styles/layout/global.scss";
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
