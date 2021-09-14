@@ -1,3 +1,5 @@
+import { signIn, signOut, useSession } from "next-auth/client";
+
 import { FaGithub } from "react-icons/fa";
 import { FiX } from "react-icons/fi";
 
@@ -7,16 +9,26 @@ import styles from "./styles.module.scss";
 const cn = classnames.bind(styles);
 
 export function SignInButton() {
-  const isUserLoggedIn = true;
+  const [session] = useSession();
 
-  return isUserLoggedIn ? (
-    <button type="button" className={cn("sign-in-button")}>
+  //TODO: implementar validação caso o usuário não tenha email publico
+
+  return session ? (
+    <button
+      type="button"
+      className={cn("sign-in-button")}
+      onClick={() => signOut()}
+    >
       <FaGithub color="#04d361" />
-      Israel Sampaio
+      {session.user.name}
       <FiX color="#737380" className={cn("sign-in-button__close-icon")} />
     </button>
   ) : (
-    <button type="button" className={cn("sign-in-button")}>
+    <button
+      type="button"
+      className={cn("sign-in-button")}
+      onClick={() => signIn("github")}
+    >
       <FaGithub color="#ebA417" />
       Sign in with github
     </button>
