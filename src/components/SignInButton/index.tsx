@@ -11,8 +11,6 @@ const cn = classnames.bind(styles);
 export function SignInButton() {
   const [session] = useSession();
 
-  //TODO: implementar validação caso o usuário não tenha email publico
-
   return session ? (
     <button
       type="button"
