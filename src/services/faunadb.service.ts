@@ -1,5 +1,7 @@
-import { Client } from "faunadb";
+import faunadb, { query } from "faunadb";
 
-export const fauna = new Client({
-  secret: process.env.FAUNA_DB_KEY,
+export const fauna = new faunadb.Client({
+  secret: process.env.FAUNADB_KEY,
 });
+
+export const q = query;

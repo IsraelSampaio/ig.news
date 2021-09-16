@@ -1,8 +1,7 @@
 import NextAuth from "next-auth";
 import Providers from "next-auth/providers";
-import { query as q } from "faunadb";
 
-import { fauna } from "../../../services/faunadb.service";
+import { fauna, q } from "../../../services/faunadb.service";
 
 export default NextAuth({
   providers: [
@@ -32,6 +31,8 @@ export default NextAuth({
 
         return true; //Retorna true caso deu tudo certo com login
       } catch (err) {
+        console.log(err);
+
         return false; //Retorna false caso deu error com login
       }
     },
